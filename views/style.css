@@ -1,0 +1,27 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  #postForm {
+    margin-bottom: 20px;
+  }
+  
+  #postInfo {
+    display: none;
+  }
+  
+  #postImage {
+    max-width: 100%;
+  }
+  
+  #comments {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #comments li {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  

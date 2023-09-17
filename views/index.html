@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+  <title>Social Media App</title>
+  <!--<link rel="stylesheet" type="text/css" href="style.css"> --><!-- Link your CSS file here -->
+</head>
+<body>
+  <h1>Create a Post</h1>
+  <div class="post-container">
+    <form id="postForm">
+      <label for="postLink">Post Link:</label><br>
+      <input type="text" id="postLink" name="postLink"><br>
+      <label for="postDescription">Post Description:</label><br>
+      <textarea id="postDescription" name="postDescription"></textarea><br><br>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+  <h1>All Posts</h1>
+  <div id="posts"></div>
+
+  <script src="/static/script.js"></script> <!-- Reference the script.js file -->
+</body>
+</html>
