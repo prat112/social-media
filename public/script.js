@@ -1,5 +1,3 @@
-
-
 async function handleFormSubmit(event) {
   event.preventDefault();
 
@@ -29,6 +27,49 @@ async function handleFormSubmit(event) {
   }
 }
 
+async function fetchPosts() {
+  try {
+    const response = await axios.get('/posts');
+    const data = response.data;
+    const postsDiv = document.getElementById('posts');
+    postsDiv.innerHTML = '';
+
+    data.forEach(post => {
+      const postDiv = document.createElement('div');
+      postDiv.classList.add('post-container');
+      postDiv.innerHTML = `
+        <h3>Post Link: <a href="${post.postLink}" target="_blank">${post.postLink}</a></h3>
+        <p>Description: ${post.postDescription}</p>
+        <img src="${post.image}" alt="Post Image">
+        <p>User: ${post.user}</p>
+        <form id="commentForm-${post.id}">
+          <label for="commentInput-${post.id}">Add a Comment (Anonymous):</label><br>
+          <textarea id="commentInput-${post.id}" name="commentInput" rows="3"></textarea><br><br>
+          <button onclick="handleCommentSubmit(${post.id}, event)">Add Comment</button>
+        </form>
+        <div id="comments-${post.id}">
+          <h4>Comments:</h4>
+          <div id="commentsList-${post.id}">
+            ${Array.isArray(post.comments) ? post.comments.map(comment => `<p>${comment}</p>`).join('') : ''}
+          </div>
+        </div>
+        <hr>
+      `;
+
+      postsDiv.appendChild(postDiv);
+    });
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    alert('An error occurred while fetching posts.');
+  }
+}
+// Fetch posts on page load
+fetchPosts();
+
+// Attach event listener to the form
+const form = document.getElementById('postForm');
+form.addEventListener('submit', handleFormSubmit);
+
 async function handleCommentSubmit(postId, event) {
   event.preventDefault();
 
@@ -54,25 +95,3 @@ async function handleCommentSubmit(postId, event) {
     alert('An error occurred while adding the comment.');
   }
 }
-
-async function fetchPosts() {
-  try {
-    const response = await axios.get('/posts');
-    const data = response.data;  // Access response data directly
-    const postsDiv = document.getElementById('posts');
-    postsDiv.innerHTML = '';
-    data.forEach(post => {
-      // ... (rest of the code remains the same)
-    });
-  } catch (error) {
-    console.error('Error fetching posts:', error);
-    alert('An error occurred while fetching posts.');
-  }
-}
-
-// Fetch posts on page load
-fetchPosts();
-
-// Attach event listener to the form
-const form = document.getElementById('postForm');
-form.addEventListener('submit', handleFormSubmit);
